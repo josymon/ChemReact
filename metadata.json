@@ -1,0 +1,5 @@
+{
+  "name": "Little Alchemist Lab",
+  "description": "An interactive, drag-and-drop chemistry playground for kids powered by Gemini. Mix elements and watch them react!",
+  "requestFramePermissions": []
+}
