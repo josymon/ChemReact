@@ -1,10 +1,16 @@
 export enum ElementCategory {
   ALKALI_METAL = 'Alkali Metal',
-  NONMETAL = 'Nonmetal',
-  NOBLE_GAS = 'Noble Gas',
+  ALKALINE_EARTH_METAL = 'Alkaline Earth Metal',
   TRANSITION_METAL = 'Transition Metal',
+  POST_TRANSITION_METAL = 'Post-Transition Metal',
+  METALLOID = 'Metalloid',
+  NONMETAL = 'Nonmetal',
   HALOGEN = 'Halogen',
-  COMPOUND = 'Compound'
+  NOBLE_GAS = 'Noble Gas',
+  LANTHANIDE = 'Lanthanide',
+  ACTINIDE = 'Actinide',
+  COMPOUND = 'Compound',
+  UNKNOWN = 'Unknown'
 }
 
 export interface ChemicalElement {
@@ -14,6 +20,8 @@ export interface ChemicalElement {
   category: ElementCategory;
   color: string;
   description: string;
+  group?: number; // 1-18
+  period?: number; // 1-7
 }
 
 export enum ReactionEffect {
@@ -24,7 +32,14 @@ export enum ReactionEffect {
   FREEZE = 'FREEZE',
   COLOR_CHANGE = 'COLOR_CHANGE',
   GLOW = 'GLOW',
-  SMOKE = 'SMOKE'
+  SMOKE = 'SMOKE',
+  PRECIPITATE = 'PRECIPITATE'
+}
+
+export interface ReactionProduct {
+  symbol: string;
+  name: string;
+  count: number;
 }
 
 export interface ReactionResponse {
@@ -32,7 +47,8 @@ export interface ReactionResponse {
   visualEffect: ReactionEffect;
   balancedEquation: string;
   isPossible: boolean;
-  resultColor?: string; // Hex code for the resulting liquid/substance
+  resultColor?: string; // Hex code
+  products?: ReactionProduct[]; // The resulting molecules
 }
 
 export interface DragItem {

@@ -27,9 +27,21 @@ const reactionSchema: Schema = {
     resultColor: {
       type: Type.STRING,
       description: "A valid Hex color code representing the resulting substance (e.g., #FFFFFF for steam, #FF0000 for rust).",
+    },
+    products: {
+      type: Type.ARRAY,
+      description: "List of the resulting compounds/elements formed in the beaker. If just a mix, list the ingredients.",
+      items: {
+        type: Type.OBJECT,
+        properties: {
+          symbol: { type: Type.STRING, description: "Chemical symbol (e.g., H2O, NaCl)" },
+          name: { type: Type.STRING, description: "Common name (e.g., Water, Salt)" },
+          count: { type: Type.NUMBER, description: "Relative visual quantity (1-3)" }
+        }
+      }
     }
   },
-  required: ["funDescription", "visualEffect", "balancedEquation", "isPossible"],
+  required: ["funDescription", "visualEffect", "balancedEquation", "isPossible", "products"],
 };
 
 export const simulateReaction = async (reactants: string[]): Promise<ReactionResponse> => {
@@ -58,10 +70,11 @@ export const simulateReaction = async (reactants: string[]): Promise<ReactionRes
         3. Visuals: Choose the most appropriate visual effect enum.
         4. Colors: Provide a hex code that best represents the result.
         5. If nothing happens (e.g., Noble gases), explain why simply.
-        6. If the reaction is dangerous (explosive), describe it safely but excitingly!`,
+        6. If the reaction is dangerous (explosive), describe it safely but excitingly!
+        7. Products: List the resulting molecules/elements so the app can visualize the change (e.g., H + H + O -> H2O).`,
         responseMimeType: "application/json",
         responseSchema: reactionSchema,
-        temperature: 0.3, // Keep it relatively deterministic but creative enough for descriptions
+        temperature: 0.3, 
       },
     });
 
